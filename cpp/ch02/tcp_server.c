@@ -77,7 +77,7 @@ int main(int argc, char *argv[]) {
       error_handling("accept() error");
     }
     write(clnt_sock, message, sizeof(message));
-    close(clnt_sock); 
+    close(clnt_sock);
   }
 
   // close(clnt_sock);
