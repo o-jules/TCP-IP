@@ -154,3 +154,9 @@ int inet_aton(const char *string, struct in_addr *addr);
 
 char * inet_ntoa(struct in_addr addr);
 ```
+
+### 客户端地址信息初始化
+
+上述网络地址信息初始化过程主要针对服务器而非客户端。
+服务器端的准备工作通过bind函数来完成，而客户端则通过connect函数来完成。因此，函数调用前需要准备的地址值类型也不同。
+服务器端声明 `sockaddr_in` 结构体变量，将其初始化为赋予服务器端IP和套接字的端口，然后调用`bind`函数；而客户端则声明 `sockaddr_in` 结构体变量，并初始化为要与之连接的的服务器端套接字的IP和端口号，然后调用`connect`函数。
