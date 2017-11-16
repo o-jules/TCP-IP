@@ -146,3 +146,11 @@ int inet_aton(const char *string, struct in_addr *addr);
 ```
 
 `inet_aton` 与 `inet_addr` 函数在功能上完全相同，只不过利用了in_addr结构体，其使用频率更高。
+
+相反的转换函数，即将数值地址转换成字符串：
+
+```c
+#include <arpa/inet.h>
+
+char * inet_ntoa(struct in_addr addr);
+```
