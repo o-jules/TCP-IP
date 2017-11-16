@@ -103,3 +103,20 @@ CPU 向内存保存数据的方式有 2 种，这意味着 CPU 解析数据的�
 由于不同计算机之间采用的字节序不同，数据传输后解析可能出现问题。因此，在通过网络传输数据时约定统一方式，这种约定称为**网络字节序**，并统一为大端序。
 
 即，在进行网络数据传输时，需要将数据数组统一转化成大端格式。
+
+### 字节序转换
+
+帮助转换字节序的函数有：
+
+```c
+unsigned short htons(unsigned short);
+unsigned short ntohs(unsigned short);
+unsigned long ntohs(unsigned long);
+unsigned long ntohs(unsigned long);
+```
+
+其中，h 代表 host，n 代表 network；s 代表short，l 代表long（Linux中long类型占用 4 个字节）。
+
+### 数据转换的必要性
+
+并不是所有的数据都需要手动转换，很多时候都是自动的过程。一般除去向 sockaddr_in 结构体变量填充数据外，其他情况无需考虑字节序问题。
