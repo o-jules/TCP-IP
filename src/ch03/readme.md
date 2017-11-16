@@ -120,3 +120,29 @@ unsigned long ntohs(unsigned long);
 ### 数据转换的必要性
 
 并不是所有的数据都需要手动转换，很多时候都是自动的过程。一般除去向 sockaddr_in 结构体变量填充数据外，其他情况无需考虑字节序问题。
+
+## 网络地址的初始化与分配
+
+### 将字符串信息转换为网络字节序的整数型
+
+`sockaddr_in` 中保存地址信息的成员为32为整数型。因此，为了分配 IP 地址，需要将其表示为 32 位整数型数据。
+
+该功能可以通过一下函数实现：
+
+```c
+#include <arpa/inet.h>
+
+in_addr_t inet_addr(const char *string);
+```
+
+还有一个函数也能实现：
+
+```c
+#include <arpa/inet.h>
+
+int inet_aton(const char *string, struct in_addr *addr);
+// string 需要转换的IP地址信息的字符串
+// addr 将保存转换结果的 in_addr 结构体变量的地址值
+```
+
+`inet_aton` 与 `inet_addr` 函数在功能上完全相同，只不过利用了in_addr结构体，其使用频率更高。
