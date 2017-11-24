@@ -84,3 +84,38 @@ int accept(int sock, struct sockaddr *addr, socklen_t * addrlen);
 // addr 保存发起连接请求的客户端地址信息的变量地址值，调用函数后向传递来的地址变量参数填充客户端地址信息
 // addrlen 第二个参数addr结构体的长度，但是存有长度变量的地址。函数调用完成后，该参数即被填充入客户端地址的长度
 ```
+
+
+### TCP 客户端默认函数调用
+
+```c
+socket() // 创建套接字
+
+connect() // 请求连接
+
+read(); write(); // 交换数据
+
+close() // 断开连接
+```
+
+请求连接的函数是：
+
+```c
+#include <sys/socket.h>
+
+// 成功时返回 0，失败时返回 1
+int connect(int sock, struct sockaddr *servaddr, socklen_t addrlen);
+
+// sock 客户端套接字文件描述符
+// servaddr 保存目标服务器端地址信息的变量地址值
+// addrlen 以字节为单位传递已传递给第二个结构体参数 servaddr 的地址变量长度。
+```
+
+客户端调用 connect 函数后，发生以下情况之一才会返回（完成函数调用）。
+
+  - 服务器端接收连接请求
+  - 发生断网等异常情况而中断连接请求
+
+（需要注意，所谓的“接收连接”并不意味着服务器端调用 accept 函数，其实是服务器端把连接请求纪录到等待队列。因此 connect 函数返回后并不立即进行数据交换。）
+
+客户端的 IP 地址和端口在调用connect函数时自动分配，无需调用标记的 bind 函数（但不意味着不分配 IP 和 端口，所有的网络数据交换都必须要 IP 和 端口）。
