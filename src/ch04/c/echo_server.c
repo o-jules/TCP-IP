@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include <unistd.h>
 #include <arpa/inet.h>
 #include <sys/socket.h>
@@ -70,7 +71,12 @@ int main(int argc, char *argv[]) {
     } else {
       printf("Connect client %d.\n", i);
     }
+
     while((str_len = read(clnt_sock, message, BUF_SIZE)) != 0) {
+      for(int j = BUF_SIZE - 1; j >= 0; j--) {
+        message[j] = toupper(message[j]);
+      }
+
       write(clnt_sock, message, str_len);
     }
 
